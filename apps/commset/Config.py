@@ -1,6 +1,5 @@
 
 import os
-import sys
 
 def Get_ConfigInfo(Config):
     # 取数据库连接信息 敏感信息 放入文本配置中

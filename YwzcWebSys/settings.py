@@ -34,9 +34,9 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-AUTHENTICATION_BACKENDS = (
-    # 'Users.views.CustomBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#     'Users.views.CustomBackend',
+# )
 
 
 # Application definition
@@ -50,13 +50,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # 注册自定义的apps
-    'commset',                          # 系统通用设置
+    'apps.commset',                          # 系统通用设置
+    'apps.netmget',                          # 系统通用设置
 
     # 注册xadmin
     'xadmin',
     'crispy_forms',
 
 ]
+
+# 此处重载是为了使我们的UserProfile生效
+AUTH_USER_MODEL = "commset.UserProfile"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
