@@ -6,18 +6,19 @@ from xadmin.models import Log
 
 # 和X admin的view绑定
 from xadmin import views
-from .models import UserProfile, SysDictName, SysDictItem
+from .models import UserProfile, SysDictName, SysDictItem, SysParam
 
 
-# x admin 全局配置参数信息设置
-# class GlobalSettings(object):
-#     site_title = "业务支持综合管理系统"
-#     site_footer = "SlovEnt 提供技术支持"
-#     # 收起菜单
-#     menu_style = "accordion"
-#
-# # 将头部与脚部信息进行注册:
-# xadmin.site.register(views.CommAdminView, GlobalSettings)
+class SysParamAdmin(object):
+    list_display = ['param_en_name', 'param_name', 'param_value', 'param_type', 'param_cls', 'param_status']
+    search_fields = ['param_en_name', 'param_name', 'param_value', 'param_type', 'param_cls', 'param_status']
+    list_filter = ['param_en_name', 'param_name', 'param_value', 'param_type', 'param_cls', 'param_status']
+    ordering = ["param_en_name"]
+    # readonly_fields = ['param_en_name', 'param_name']
+    model_icon = 'fa fa-cog'
+
+
+xadmin.site.register(SysParam, SysParamAdmin)
 
 
 # 系统字典
@@ -26,10 +27,10 @@ class SysDictInline(object):
     extra = 0
 
 class SysDictNameAdmin(object):
-    list_display = ['dict_name', 'dict_en_name', 'dict_type', 'dict_proc_flag']
-    search_fields = ['dict_name', 'dict_en_name', 'dict_type', 'dict_proc_flag']
-    list_filter = ['dict_name', 'dict_en_name', 'dict_type', 'dict_proc_flag']
-    ordering = ["-dict_name"]
+    list_display = ['dict_name', 'dict_en_name', 'dict_cls', 'dict_proc_flag']
+    search_fields = ['dict_name', 'dict_en_name', 'dict_cls', 'dict_proc_flag']
+    list_filter = ['dict_name', 'dict_en_name', 'dict_cls', 'dict_proc_flag']
+    ordering = ["dict_cls", "dict_en_name"]
     readonly_fields = ["dict_proc_flag"]
     inlines = [SysDictInline]
     refresh_times = [3, 5]
@@ -47,6 +48,8 @@ class SysDictItemAdmin(object):
 # xadmin.site.register(SysDictItem, SysDictItemAdmin)
 
 
+# xadmin 全局配置参数信息设置
+
 from apps.netmget.models import Net2Manage, Net5Manage, Net9Manage, Net10Manage, Net12Manage, Net16Manage, Net91Manage, Test168NetManage, Test169NetManage, Test170NetManage, Test171NetManage
 from apps.backtaskmget.models import DBBackTaskSet,DBBackTaskLog
 
@@ -62,6 +65,7 @@ class GlobalSetting(object):
                 {'title': '用户信息', 'url': self.get_model_url(UserProfile, 'changelist'),'icon':self.get_model_icon(UserProfile)},
                 {'title': '用户分组', 'url': self.get_model_url(Group, 'changelist'),'icon':self.get_model_icon(Group)},
                 {'title': '用户权限', 'url': self.get_model_url(Permission, 'changelist'),'icon':self.get_model_icon(Permission)},
+                {'title': '系统参数', 'url': self.get_model_url(SysParam, 'changelist'),'icon':self.get_model_icon(SysDictName)},
                 {'title': '系统字典', 'url': self.get_model_url(SysDictName, 'changelist'),'icon':self.get_model_icon(SysDictName)},
                 # {'title': '字典类别', 'url': self.get_model_url(SysDictItem, 'changelist'),'icon':self.get_model_icon(SysDictItem)},
                 {'title': '日志记录', 'url': self.get_model_url(Log, 'changelist'),'icon':self.get_model_icon(Log)},
@@ -82,8 +86,8 @@ class GlobalSetting(object):
             {'title': '备份任务管理', 'icon': 'fa fa-tasks', 'menus': (
                 {'title': '数据库备份任务', 'url': self.get_model_url(DBBackTaskSet, 'changelist'), 'icon': self.get_model_icon(DBBackTaskSet)},
                 {'title': '数据库备份日志', 'url': self.get_model_url(DBBackTaskLog, 'changelist'), 'icon': self.get_model_icon(DBBackTaskLog)},
-
             )},
         )
 
 xadmin.site.register(views.CommAdminView, GlobalSetting)
+

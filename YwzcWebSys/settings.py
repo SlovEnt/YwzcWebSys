@@ -104,14 +104,20 @@ from commset.Config import Get_ConfigInfo
 globalsConfigFile =  BASE_DIR + r"\apps\commset\Config.ini"
 globParaInfo = Get_ConfigInfo(globalsConfigFile)
 
+DB_NAME = globParaInfo["DB_NAME"]
+USER_NAME = globParaInfo["USER_NAME"]
+USER_PWD = globParaInfo["USER_PWD"]
+DB_HOST = globParaInfo["DB_HOST"]
+DB_PORT = globParaInfo["DB_PORT"]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':      globParaInfo["DB_NAME"],
-        'USER':      globParaInfo["USER_NAME"],
-        'PASSWORD': globParaInfo["USER_PWD"],
-        'HOST':      globParaInfo["DB_HOST"],
-        'PORT':      globParaInfo["DB_PORT"],
+        'NAME':      DB_NAME,
+        'USER':      USER_NAME,
+        'PASSWORD': USER_PWD,
+        'HOST':      DB_HOST,
+        'PORT':      DB_PORT,
          'OPTIONS': {
              'autocommit': True,
              'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
@@ -119,7 +125,13 @@ DATABASES = {
     }
 }
 
-
+from SEDefFuncPack import torndb
+mySqlConn = torndb.Connection(
+    "%s:%s" % (DB_HOST, DB_PORT),
+    DB_NAME,
+    USER_NAME,
+    USER_PWD,
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

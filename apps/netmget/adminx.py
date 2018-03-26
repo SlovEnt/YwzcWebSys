@@ -2,16 +2,20 @@
 __author__ = 'SlovEnt'
 __date__ = '2018/3/25 22:23'
 
-
 import xadmin
-# 和X admin的view绑定
-from xadmin import views
+from xadmin.views import CommAdminView
+
 
 from .models import IpManage,Test168NetManage,Test169NetManage,Test170NetManage,Test171NetManage, \
     Net10Manage, Net16Manage, Net2Manage,Net5Manage,Net9Manage,Net12Manage,Net91Manage
 
 class IpAllSet(object):
     model_icon = 'fa fa-link'
+    show_bookmarks = False
+    base_template = 'xadmin/base_site_cust.html'
+    # add_form_template = 'base_site_cust.html'
+    # change_form_template = 'base_site_cust.html'
+
 
 class IpManageAdmin(object):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']

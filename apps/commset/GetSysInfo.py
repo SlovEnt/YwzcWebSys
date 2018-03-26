@@ -1,22 +1,17 @@
 import os
-from commset.Config import Get_ConfigInfo
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-globalsConfigFile = BASE_DIR + r"\commset\Config.ini"
-globParaInfo = Get_ConfigInfo(globalsConfigFile)
 
 from SEDefFuncPack import torndb
+from django.conf import settings
 
 mySqlConn = torndb.Connection(
-    "%s:%s" % (globParaInfo["DB_HOST"], globParaInfo["DB_PORT"]),
-    globParaInfo["DB_NAME"],
-    globParaInfo["USER_NAME"],
-    globParaInfo["USER_PWD"],
+    "%s:%s" % (settings.DB_HOST, settings.DB_PORT),
+    settings.DB_NAME,
+    settings.USER_NAME,
+    settings.USER_PWD,
 )
 
-
 def GetSysDict(dictId):
+
     ''' 返回Django Models里使用的系统字典明细 '''
     strSql = '''
         SELECT

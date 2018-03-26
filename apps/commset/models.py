@@ -30,9 +30,8 @@ class UserProfile(AbstractUser):
 class SysDictName(models.Model):
     dict_name = models.CharField(max_length=128, null=True, verbose_name="字典名称")
     dict_en_name = models.CharField(max_length=16, null=True, verbose_name="字典简码")
-    dict_type = models.CharField(max_length=1, choices=GetSysDict("DICT_TYPE"), verbose_name=u"字典类别", default="0")
-    dict_proc_flag = models.CharField(max_length=4, null=True, verbose_name="处理标识", default="1")
-    dict_proc_flag = models.CharField(max_length=4, choices=GetSysDict("DICT_PROC_FLAG"), null=True, verbose_name="处理标识", default="1")
+    dict_cls = models.CharField(max_length=1, choices=GetSysDict("MODEL_CLS"), verbose_name=u"字典类别", default="0")
+    dict_proc_flag = models.CharField(max_length=4, choices=GetSysDict("OPER_TYPE"), null=True, verbose_name="处理标识", default="3")
 
     class Meta:
         verbose_name = u"系统字典"
@@ -59,3 +58,21 @@ class SysDictItem(models.Model):
 
     def __str__(self):
         return '字典名称：{0} (字典项标识：{1}, 字典项名称：{2})'.format(self.dict_name,self.dict_item,self.dict_item_name)
+
+
+class SysParam(models.Model):
+    param_en_name = models.CharField(max_length=32, verbose_name="参数简码")
+    param_name = models.CharField(max_length=128, verbose_name="参数名称")
+    param_value = models.CharField(max_length=128, verbose_name=u"参数值")
+    param_type = models.CharField(max_length=8, choices=GetSysDict("OPER_TYPE"), verbose_name=u"参数操作标识", default="3")
+    param_cls = models.CharField(max_length=2, choices=GetSysDict("MODEL_CLS"), verbose_name="参数分类", default="1")
+    param_status = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), null=True, verbose_name="处理标识", default="Y")
+
+    class Meta:
+        verbose_name = u"系统参数"
+        verbose_name_plural = verbose_name
+        ordering = ('param_name',)
+
+    # 重载__str__方法，打印实例会打印username，username为继承自AbstractUser
+    def __str__(self):
+        return self.param_name

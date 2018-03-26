@@ -26,6 +26,8 @@ class DBBackTaskLogAdmin(object):
     readonly_fields = ['task_name','task_run_date','task_run_time','host_ip','db_type','names_of_backdb','file_name','compre_type','file_save_path','arch_nas_path','compre_passwd','file_siz','md5_string','remark']
     # list_editable = ['use_object', 'remark']
 
+    base_template = 'xadmin/base_site_cust.html'
+
     # def queryset(self):
     #     qs = super(DBBackTaskSetAdmin, self).queryset()
     #     qs = qs.filter(net_tags="10.0.2.0")

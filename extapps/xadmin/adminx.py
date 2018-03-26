@@ -23,6 +23,7 @@ class LogAdmin(object):
     link.short_description = ""
     link.allow_tags = True
     link.is_column = False
+    base_template = 'xadmin/base_site_cust.html'
 
     list_display = ('action_time', 'user', 'ip_addr', '__str__', 'link')
     list_filter = ['user', 'action_time']
