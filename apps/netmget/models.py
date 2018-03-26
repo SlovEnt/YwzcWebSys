@@ -15,7 +15,6 @@ class IpManage(models.Model):
         verbose_name = u"IP地址管理"
         verbose_name_plural = verbose_name
 
-
     def __str__(self):
         return 'IP地址：{0} 使用对象为：{1}'.format(self.ip_addr, self.use_object)
 
@@ -80,6 +79,12 @@ class Net12Manage(IpManage):
 class Net9Manage(IpManage):
     class Meta:
         verbose_name = u"10.0.9.0"
+        verbose_name_plural = verbose_name
+        proxy = True
+
+class Net91Manage(IpManage):
+    class Meta:
+        verbose_name = u"10.0.91.0"
         verbose_name_plural = verbose_name
         proxy = True
 

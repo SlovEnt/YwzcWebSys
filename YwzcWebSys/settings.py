@@ -30,7 +30,7 @@ SECRET_KEY = 'oeo%i^3=m59hyi1-j3i(pf=(q1y3h24p#b_p-udrs1!)gy)v%3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
 
     # 注册自定义的apps
     'apps.commset',                          # 系统通用设置
-    'apps.netmget',                          # 系统通用设置
+    'apps.netmget',                          # IP地址管理
+    'apps.backtaskmget',                    # 备份任务管理
 
     # 注册xadmin
     'xadmin',

@@ -72,8 +72,10 @@
                 template = el.html();
             }
 
-            template = el.html(template).text(); // decoded
-            template = $($.parseHTML(template));
+            //template = el.html(template).text(); // decoded
+            //template = $($.parseHTML(template));
+			template = el.html(template); // decoded
+			template = $($.parseHTML(template.html()));
 
             template.removeAttr('id');
             if(template.data("replace-id")){

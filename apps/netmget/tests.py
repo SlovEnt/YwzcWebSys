@@ -18,7 +18,7 @@ def getip(ip, count):
             wip = '%s.%s.%s' % (ip_before, str(ip2), str(new_ip1))
             strSql = '''INSERT INTO `YwzcWebSys`.`netmget_ipmanage` (`ip_addr`, `net_tags`, `sub_mask`, `gateway`, `use_object`, `remark`) 
                       VALUES ('%s', '%s', '255.255.255.0', '%s', '', '');
-                        ''' % (wip,'192.168.171.0','	192.168.171.254' )
+                        ''' % (wip,'10.0.91.0','	10.0.91.254' )
             print(strSql)
 
         else:
@@ -27,10 +27,10 @@ def getip(ip, count):
             wip = '%s.%s.%s' % (ip_before, str(new_ip2), str(new_ip1))
             strSql = '''INSERT INTO `YwzcWebSys`.`netmget_ipmanage` (`ip_addr`, `net_tags`, `sub_mask`, `gateway`, `use_object`, `remark`) 
                       VALUES ('%s', '%s', '255.255.255.0', '%s', '', '');
-                        ''' % (wip,'192.168.171.0','	192.168.171.254' )
+                        ''' % (wip,'10.0.91.0','	10.0.91.254' )
             print(strSql)
 
 
 
 if __name__ == '__main__':
-    getip('192.168.171.0', 255)
+    getip('10.0.91.0', 255)

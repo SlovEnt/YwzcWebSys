@@ -8,8 +8,10 @@ import xadmin
 from xadmin import views
 
 from .models import IpManage,Test168NetManage,Test169NetManage,Test170NetManage,Test171NetManage, \
-    Net10Manage, Net16Manage, Net2Manage,Net5Manage,Net9Manage,Net12Manage
+    Net10Manage, Net16Manage, Net2Manage,Net5Manage,Net9Manage,Net12Manage,Net91Manage
 
+class IpAllSet(object):
+    model_icon = 'fa fa-link'
 
 class IpManageAdmin(object):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -19,7 +21,7 @@ class IpManageAdmin(object):
     readonly_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway']
 # xadmin.site.register(IpManage, IpManageAdmin)
 
-class Net2ManageAdmin(object):
+class Net2ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -34,7 +36,7 @@ class Net2ManageAdmin(object):
 
 xadmin.site.register(Net2Manage, Net2ManageAdmin)
 
-class Net5ManageAdmin(object):
+class Net5ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -49,7 +51,7 @@ class Net5ManageAdmin(object):
 
 xadmin.site.register(Net5Manage, Net5ManageAdmin)
 
-class Net9ManageAdmin(object):
+class Net9ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -64,7 +66,7 @@ class Net9ManageAdmin(object):
 
 xadmin.site.register(Net9Manage, Net9ManageAdmin)
 
-class Net10ManageAdmin(object):
+class Net10ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -79,7 +81,7 @@ class Net10ManageAdmin(object):
 
 xadmin.site.register(Net10Manage, Net10ManageAdmin)
 
-class Net12ManageAdmin(object):
+class Net12ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -94,8 +96,7 @@ class Net12ManageAdmin(object):
 
 xadmin.site.register(Net12Manage, Net12ManageAdmin)
 
-
-class Net16ManageAdmin(object):
+class Net16ManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -110,8 +111,22 @@ class Net16ManageAdmin(object):
 
 xadmin.site.register(Net16Manage, Net16ManageAdmin)
 
+class Net91ManageAdmin(IpAllSet):
+    list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
+    search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
+    list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
+    ordering = ["id"]
+    readonly_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway']
+    list_editable = ['use_object', 'remark']
 
-class Test168NetManageAdmin(object):
+    def queryset(self):
+        qs = super(Net91ManageAdmin, self).queryset()
+        qs = qs.filter(net_tags="10.0.91.0")
+        return qs
+
+xadmin.site.register(Net91Manage, Net91ManageAdmin)
+
+class Test168NetManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -126,7 +141,7 @@ class Test168NetManageAdmin(object):
 
 xadmin.site.register(Test168NetManage, Test168NetManageAdmin)
 
-class Test169NetManageAdmin(object):
+class Test169NetManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -141,7 +156,7 @@ class Test169NetManageAdmin(object):
 
 xadmin.site.register(Test169NetManage, Test169NetManageAdmin)
 
-class Test170NetManageAdmin(object):
+class Test170NetManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
@@ -156,7 +171,7 @@ class Test170NetManageAdmin(object):
 
 xadmin.site.register(Test170NetManage, Test170NetManageAdmin)
 
-class Test171NetManageAdmin(object):
+class Test171NetManageAdmin(IpAllSet):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
     search_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object']
     list_filter = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']
