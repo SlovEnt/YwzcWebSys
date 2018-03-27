@@ -52,6 +52,7 @@ class SysDictItemAdmin(object):
 
 from apps.netmget.models import Net2Manage, Net5Manage, Net9Manage, Net10Manage, Net12Manage, Net16Manage, Net91Manage, Test168NetManage, Test169NetManage, Test170NetManage, Test171NetManage
 from apps.backtaskmget.models import DBBackTaskSet,DBBackTaskLog
+from apps.insbusi.models import InserNewOrgInfo
 
 class GlobalSetting(object):
 
@@ -86,6 +87,9 @@ class GlobalSetting(object):
             {'title': '备份任务管理', 'icon': 'fa fa-tasks', 'menus': (
                 {'title': '数据库备份任务', 'url': self.get_model_url(DBBackTaskSet, 'changelist'), 'icon': self.get_model_icon(DBBackTaskSet)},
                 {'title': '数据库备份日志', 'url': self.get_model_url(DBBackTaskLog, 'changelist'), 'icon': self.get_model_icon(DBBackTaskLog)},
+            )},
+            {'title': '机构业务', 'icon': 'fa fa-building', 'menus': (
+                {'title': '批量加新营业部', 'url': self.get_model_url(InserNewOrgInfo, 'changelist'), 'icon': self.get_model_icon(InserNewOrgInfo)},
             )},
         )
 

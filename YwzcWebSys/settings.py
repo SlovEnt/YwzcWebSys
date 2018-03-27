@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.commset',                          # 系统通用设置
     'apps.netmget',                          # IP地址管理
     'apps.backtaskmget',                    # 备份任务管理
+    'apps.insbusi',                          # 机构业务
 
     # 注册xadmin
     'xadmin',
