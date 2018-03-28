@@ -50,7 +50,8 @@ class SysDictItemAdmin(object):
 
 # xadmin 全局配置参数信息设置
 
-from apps.netmget.models import Net2Manage, Net5Manage, Net9Manage, Net10Manage, Net12Manage, Net16Manage, Net91Manage, Test168NetManage, Test169NetManage, Test170NetManage, Test171NetManage
+from apps.netmget.models import Net2Manage, Net5Manage, Net9Manage, Net10Manage, Net12Manage, Net16Manage, \
+    Net91Manage, Test168NetManage, Test169NetManage, Test170NetManage, Test171NetManage
 from apps.backtaskmget.models import DBBackTaskSet,DBBackTaskLog
 from apps.insbusi.models import RunScriptsList, InserNewOrgInfo
 

@@ -19,6 +19,7 @@ class InserNewOrgInfoAdmin(object):
     # readonly_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway']
     # list_editable = ['use_object', 'remark']
     model_icon = "fa fa-newspaper-o"
+    import_excel = True
     show_bookmarks = False
     inlines = [InserNewOrgInfoInline]
 
