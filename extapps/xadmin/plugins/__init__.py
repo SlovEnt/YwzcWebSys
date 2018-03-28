@@ -8,6 +8,7 @@ PLUGINS = (
     'refresh',
     'details',
     'editable',
+    'excel',
     'relate',
     'chart',
     'ajax',

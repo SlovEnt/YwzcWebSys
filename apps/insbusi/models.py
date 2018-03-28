@@ -56,14 +56,39 @@ class InserNewOrgInfoLog(models.Model):
 
 class RunScriptsList(models.Model):
     script_name = models.CharField(max_length=128, verbose_name="函数名称")
+    script_desc = models.CharField(max_length=128, verbose_name="函数说明")
     run_status = models.CharField(max_length=1, choices=GetSysDict("RUN_STATUS"), default="0", verbose_name="执行状态")
-    run_path = models.TextField(verbose_name="执行路径")
+    run_path = models.CharField(max_length=128,verbose_name="执行路径") # 格式 /xadmin/RunScript
+    run_param = models.TextField(verbose_name="执行参数") # 格式 {ID:id,load:lo}
 
     def run_point(self):
-
         from django.utils.safestring import mark_safe
-        return mark_safe('''<a style="padding:2px 12px;" href="/xadmin/insbusi/%s/run/" class="btn btn-primary">执行</a>''')
-        # return mark_safe('''<a href="/xadmin/insbusi/%s/run/" class="btn btn-primary">执行</a>''')
+        # rtnHtml = '''<a href="/apps/%s/" class="btn btn-primary">执行</a>''' % self.run_path
+        rtnHtml = '''
+            <script type="text/javascript">
+                    function %s(id,lo) {
+                        $.ajax({
+                            url:"%s",
+                            data:%s,
+                            type:'POST',
+                            success:function(json){
+                               var data = $.parseJSON(json);
+                                if( data ) {
+                                    $.each(data, function (key, value) {
+                                        var st=""
+                                        for(var i=0;i<value.length-1;i++){
+                                             st += value[i]
+                                             st +="</br>"
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                   }
+            </script>
+            <a class="btn btn-primary" onclick="%s();">执行</a>
+            ''' % (self.script_name, self.run_path, self.run_param, self.script_name)
+        return mark_safe(rtnHtml)
     run_point.short_description = "执行"
 
     class Meta:
