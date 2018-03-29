@@ -17,6 +17,7 @@ class DBBackTaskSet(models.Model):
     compre_type = models.CharField(max_length=8, choices=GetSysDict("COMPRE_TYPE"), verbose_name="压缩方式", default="RAR")
     is_compre_passwd = models.CharField(max_length=32, choices=GetSysDict("IS_COMPRE_PASSED"),verbose_name="是否加密压缩", default="Y")
     file_save_path = models.CharField(max_length=255, verbose_name="文件保存路径")
+    arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
     names_of_backdb = models.CharField(max_length=512, verbose_name="备份库列表")
     reserved_day = models.IntegerField(verbose_name="备份保留天数")
     proc_flag = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), verbose_name="处理标识", default="Y")
@@ -45,7 +46,7 @@ class DBBackTaskLog(models.Model):
     file_save_path = models.CharField(max_length=255, verbose_name="原始路径")
     arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
     compre_passwd = models.CharField(max_length=32, verbose_name="压缩密码")
-    file_siz = models.FilePathField(verbose_name="文件大小（kb）")
+    file_siz = models.IntegerField(verbose_name="文件大小（kb）")
     md5_string = models.CharField(max_length=64, verbose_name="MD5校验码")
     remark = models.TextField(verbose_name="备注信息")
 
@@ -53,3 +54,61 @@ class DBBackTaskLog(models.Model):
         verbose_name = u"数据库备份日志"
         verbose_name_plural = verbose_name
         ordering = ('task_name','task_run_date','task_run_time')
+
+
+class FileBackTaskSet(models.Model):
+    task_name = models.CharField(max_length=128, verbose_name="任务名称")
+    host_ip = models.GenericIPAddressField(verbose_name="主机IP")
+    host_user = models.CharField(max_length=32, verbose_name=u"系统用户名")
+    host_user_passwd = models.CharField(max_length=128, verbose_name="用户密码")
+    file_save_path = models.CharField(max_length=255, verbose_name="文件原始路径")
+    arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
+    reserved_day = models.IntegerField(verbose_name="备份切转天数")
+    proc_flag = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), verbose_name="处理标识", default="Y")
+    task_run_time = models.TimeField(verbose_name="任务执行时间")
+
+    class Meta:
+        verbose_name = u"文件备份任务"
+        verbose_name_plural = verbose_name
+        ordering = ('task_name',)
+
+    # 重载__str__方法，打印实例会打印username，username为继承自AbstractUser
+    def __str__(self):
+        return self.task_name
+
+
+class FileBackTaskExcludeSet(models.Model):
+    task_name = models.ForeignKey(FileBackTaskSet, on_delete=models.CASCADE, verbose_name="任务名称")
+    exclude_list = models.CharField(max_length=256, verbose_name="排除名单")
+    proc_flag = models.CharField(max_length=1, verbose_name="处理标识", default="Y")
+
+    class Meta:
+        verbose_name = u"文件备份排除列表"
+        verbose_name_plural = verbose_name
+        ordering = ('task_name','exclude_list',)
+
+    # 重载__str__方法，打印实例会打印username，username为继承自AbstractUser
+    def __str__(self):
+        return self.task_name
+
+
+class FileBackTaskLog(models.Model):
+    task_name = models.CharField(max_length=128, verbose_name="任务名称")
+    task_run_date = models.DateField(verbose_name="任务执行日期")
+    task_run_time = models.TimeField(verbose_name="任务执行时间")
+    host_ip = models.GenericIPAddressField(verbose_name="主机IP")
+    file_modify_dt = models.DateTimeField(verbose_name="文件修改时间")
+    md5_string = models.CharField(max_length=64, verbose_name="MD5校验码")
+    file_name = models.FileField(verbose_name="文件名")
+    file_save_path = models.CharField(max_length=255, verbose_name="原始路径")
+    arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
+    file_siz = models.IntegerField(verbose_name="文件大小（kb）")
+    remark = models.TextField(verbose_name="备注信息")
+
+    class Meta:
+        verbose_name = u"文件备份日志"
+        verbose_name_plural = verbose_name
+        ordering = ('task_run_date','task_run_time')
+
+    def __str__(self):
+        return self.task_name
