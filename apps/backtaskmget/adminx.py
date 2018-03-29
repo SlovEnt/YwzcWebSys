@@ -1,6 +1,6 @@
 import xadmin
 from xadmin import views
-from .models import DBBackTaskSet, DBBackTaskLog
+from .models import DBBackTaskSet, DBBackTaskLog, FileBackTaskExcludeSet, FileBackTaskLog, FileBackTaskSet
 
 class DBBackTaskSetAdmin(object):
     list_display = ['task_name','host_ip','host_user','db_type','db_sid','is_compre','compre_type','is_compre_passwd','file_save_path','names_of_backdb','reserved_day','proc_flag','task_run_time']
@@ -34,4 +34,42 @@ class DBBackTaskLogAdmin(object):
     #     return qs
 
 xadmin.site.register(DBBackTaskLog, DBBackTaskLogAdmin)
+
+
+class FileBackTaskSetInline(object):
+    model = FileBackTaskExcludeSet
+    extra = 0
+
+class FileBackTaskSetAdmin(object):
+    list_display = ['task_name','host_ip','file_save_path','arch_nas_path','reserved_day','proc_flag','task_run_time']
+    search_fields = ['task_name','host_ip','reserved_day','proc_flag']
+    list_filter = ['task_name','host_ip','file_save_path','arch_nas_path','reserved_day','proc_flag','task_run_time']
+    list_editable = ['proc_flag', 'task_run_time']
+    ordering = ["task_name",'host_ip']
+    inlines = [FileBackTaskSetInline]
+    model_icon = 'fa fa-file-archive-o'
+
+xadmin.site.register(FileBackTaskSet, FileBackTaskSetAdmin)
+
+
+class FileBackTaskExcludeSetAdmin(object):
+    list_display = ['exclude_list','proc_flag']
+    ordering = ['exclude_list']
+    hidden_menu = True # 隐藏模块 不在菜单中显示
+
+xadmin.site.register(FileBackTaskExcludeSet, FileBackTaskExcludeSetAdmin)
+
+
+class FileBackTaskLogAdmin(object):
+    list_display = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
+    search_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
+    list_filter = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
+    ordering = ['task_run_date', "task_run_time"]
+    readonly_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz']
+
+    base_template = 'xadmin/base_site_cust.html'
+    model_icon = 'fa fa-file-archive-o'
+
+
+xadmin.site.register(FileBackTaskLog, FileBackTaskLogAdmin)
 

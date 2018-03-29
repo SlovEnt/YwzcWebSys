@@ -31,7 +31,6 @@ class InserNewOrgInfoLogAdmin(object):
     hidden_menu = True # 隐藏模块 不在菜单中显示
 
 class RunScriptsListAdmin(object):
-    rtnHtml = r"http:\\sadfasd"
     exclude = ['run_status','run_point']
     list_display = ['script_name', 'script_desc','run_path','run_param', 'run_status', 'run_point']
     search_fields = ['script_name', 'run_status']
