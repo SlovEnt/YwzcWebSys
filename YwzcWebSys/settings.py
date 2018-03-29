@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
+from __future__ import absolute_import
 
 import os
 
@@ -59,9 +60,6 @@ INSTALLED_APPS = [
     # 注册xadmin
     'xadmin',
     'crispy_forms',
-
-    # 注册定时计划任务
-    'django_crontab',
 
 ]
 
@@ -130,13 +128,13 @@ DATABASES = {
     }
 }
 
-from SEDefFuncPack import torndb
-mySqlConn = torndb.Connection(
-    "%s:%s" % (DB_HOST, DB_PORT),
-    DB_NAME,
-    USER_NAME,
-    USER_PWD,
-)
+# from SEDefFuncPack import torndb
+# mySqlConn = torndb.Connection(
+#     "%s:%s" % (DB_HOST, DB_PORT),
+#     DB_NAME,
+#     USER_NAME,
+#     USER_PWD,
+# )
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -188,5 +186,3 @@ STATICFILES_DIRS = [
 # 设置上传文件的路径
 MEDIA_URL = '/upload/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'upload')
-
-

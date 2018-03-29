@@ -62,6 +62,8 @@ class FileBackTaskSet(models.Model):
     host_user = models.CharField(max_length=32, verbose_name=u"系统用户名")
     host_user_passwd = models.CharField(max_length=128, verbose_name="用户密码")
     file_save_path = models.CharField(max_length=255, verbose_name="文件原始路径")
+    arch_nas_user = models.CharField(max_length=32, verbose_name=u"归档路径用户名")
+    arch_nas_passwd = models.CharField(max_length=128, verbose_name="归档路径密码")
     arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
     reserved_day = models.IntegerField(verbose_name="备份切转天数")
     proc_flag = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), verbose_name="处理标识", default="Y")

@@ -70,6 +70,5 @@ class FileBackTaskLogAdmin(object):
     base_template = 'xadmin/base_site_cust.html'
     model_icon = 'fa fa-file-archive-o'
 
-
 xadmin.site.register(FileBackTaskLog, FileBackTaskLogAdmin)
 
