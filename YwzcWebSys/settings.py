@@ -59,6 +59,9 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
 
+    # 注册定时计划任务
+    'django_crontab',
+
 ]
 
 # 此处重载是为了使我们的UserProfile生效
