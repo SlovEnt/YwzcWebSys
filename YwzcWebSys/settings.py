@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'apps.netmget',                          # IP地址管理
     'apps.backtaskmget',                    # 备份任务管理
     'apps.insbusi',                          # 机构业务
+    'apps.runscripts',                       # 后台函数执行管理
 
     # 注册xadmin
     'xadmin',
