@@ -28,7 +28,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
 
-    path('runscripts/', include('runscripts.urls'))
+    path('xadmin/insbusi/runscriptslist/', include('runscripts.urls')),
 
 
     # path('script/TestRun/', GetTestRun.as_vies(), name= "gettestrun")

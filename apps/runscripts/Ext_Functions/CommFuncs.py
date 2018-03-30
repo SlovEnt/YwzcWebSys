@@ -11,9 +11,10 @@ import sys
 
 import redis
 class RedisQueue(object):
-    def __init__(self, name, namespace='Queue', **redis_kwargs):
+
+    def __init__(self, name, namespace, hostip, port, db, **redis_kwargs):
        # redis的默认参数为：host='localhost', port=6379, db=0， 其中db为定义redis database的数量
-       self.__db= redis.Redis(host='192.168.169.30', port=6379)
+       self.__db= redis.Redis(host=hostip, port=port, db=db)
        self.key = '%s:%s' %(namespace, name)
 
     def qsize(self):

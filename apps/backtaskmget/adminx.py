@@ -45,8 +45,8 @@ class FileBackTaskSetAdmin(object):
     search_fields = ['task_name','host_ip','reserved_day','proc_flag']
     list_filter = ['task_name','host_ip','file_save_path','arch_nas_path','reserved_day','proc_flag','task_run_time']
     list_editable = ['proc_flag', 'task_run_time']
-    ordering = ["task_name",'host_ip']
     inlines = [FileBackTaskSetInline]
+    ordering = ["task_name",'host_ip']
     model_icon = 'fa fa-file-archive-o'
 
 xadmin.site.register(FileBackTaskSet, FileBackTaskSetAdmin)
@@ -54,16 +54,15 @@ xadmin.site.register(FileBackTaskSet, FileBackTaskSetAdmin)
 
 class FileBackTaskExcludeSetAdmin(object):
     list_display = ['exclude_list','proc_flag']
-    ordering = ['exclude_list']
     hidden_menu = True # 隐藏模块 不在菜单中显示
 
 xadmin.site.register(FileBackTaskExcludeSet, FileBackTaskExcludeSetAdmin)
 
 
 class FileBackTaskLogAdmin(object):
-    list_display = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
-    search_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
-    list_filter = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz','remark']
+    list_display = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz']
+    search_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz','remark']
+    list_filter = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz','remark']
     ordering = ['task_run_date', "task_run_time"]
     readonly_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz']
 

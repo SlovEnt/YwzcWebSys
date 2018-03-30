@@ -82,16 +82,16 @@ class FileBackTaskSet(models.Model):
 class FileBackTaskExcludeSet(models.Model):
     task_name = models.ForeignKey(FileBackTaskSet, on_delete=models.CASCADE, verbose_name="任务名称")
     exclude_list = models.CharField(max_length=256, verbose_name="排除名单")
-    proc_flag = models.CharField(max_length=1, verbose_name="处理标识", default="Y")
+    proc_flag = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), verbose_name="处理标识", default="Y")
 
     class Meta:
         verbose_name = u"文件备份排除列表"
         verbose_name_plural = verbose_name
-        ordering = ('task_name','exclude_list',)
+        # ordering = ('task_name','exclude_list',)
 
     # 重载__str__方法，打印实例会打印username，username为继承自AbstractUser
     def __str__(self):
-        return self.task_name
+        return self.exclude_list
 
 
 class FileBackTaskLog(models.Model):
@@ -101,9 +101,9 @@ class FileBackTaskLog(models.Model):
     host_ip = models.GenericIPAddressField(verbose_name="主机IP")
     file_modify_dt = models.DateTimeField(verbose_name="文件修改时间")
     md5_string = models.CharField(max_length=64, verbose_name="MD5校验码")
-    file_name = models.FileField(verbose_name="文件名")
-    file_save_path = models.CharField(max_length=255, verbose_name="原始路径")
-    arch_nas_path = models.CharField(max_length=255, verbose_name="归档路径")
+    file_name = models.CharField(max_length=100,verbose_name="文件名")
+    file_save_path = models.CharField(max_length=256, verbose_name="原始路径")
+    arch_nas_path = models.CharField(max_length=256, verbose_name="归档路径")
     file_siz = models.IntegerField(verbose_name="文件大小（kb）")
     remark = models.TextField(verbose_name="备注信息")
 
@@ -111,6 +111,7 @@ class FileBackTaskLog(models.Model):
         verbose_name = u"文件备份日志"
         verbose_name_plural = verbose_name
         ordering = ('task_run_date','task_run_time')
+
 
     def __str__(self):
         return self.task_name
