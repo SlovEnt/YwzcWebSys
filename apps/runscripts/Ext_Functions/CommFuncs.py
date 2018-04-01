@@ -13,9 +13,13 @@ import redis
 class RedisQueue(object):
 
     def __init__(self, name, namespace, hostip, port, db, **redis_kwargs):
-       # redis的默认参数为：host='localhost', port=6379, db=0， 其中db为定义redis database的数量
-       self.__db= redis.Redis(host=hostip, port=port, db=db)
-       self.key = '%s:%s' %(namespace, name)
+        # redis的默认参数为：host='localhost', port=6379, db=0， 其中db为定义redis database的数量
+        self.__db= redis.Redis(host=hostip, port=port, db=db)
+        self.key = '%s:%s' %(namespace, name)
+        self.name = name
+        self.namespace = namespace
+        self.db = db
+
 
     def qsize(self):
         return self.__db.llen(self.key)  # 返回队列里面list内元素的数量
@@ -34,6 +38,9 @@ class RedisQueue(object):
         # 直接返回队列第一个元素，如果队列为空返回的是None
         item = self.__db.lpop(self.key)
         return item
+
+    def delete_db(self):
+        self.__db.delete(self.key)
 
 
 class cxOracle(object):
@@ -402,4 +409,69 @@ def Get_Last_Trading_Day(dfDay):
 
     return False
 
+def Get_Redis_Param(redisConnStr, mySqlConn, flag):
+    # 获取 redis 连接参数
+    # redisConnStr = "REDIS_192.168.169.30_FileCut"
+    sqlStr = "select param_value from commset_sysparam a where a.param_en_name='%s';" % (redisConnStr)
+    redisParam = mySqlConn.query(sqlStr)
+    redisParamArr = redisParam[0]["param_value"].split("//")[1].split(",")
+    namespace = redisParamArr[1]
+    if flag == "R":
+        name = redisParamArr[2]
+    else:
+        name = redisParamArr[3]
+    hostip = redisParamArr[0].split(":")[0]
+    port = redisParamArr[0].split(":")[1].split("/")[0]
+    db = redisParamArr[0].split(":")[1].split("/")[1]
+    redisHandle = RedisQueue(name, namespace, hostip, port, db)
+    return redisHandle
 
+def Print_Dict_KandV(dict,dictName="x"):
+    for key, value in dict.items():
+        print ("{2}['{0}'] = {1}".format(key, value, dictName))
+    print()
+
+def Net_RemtePath_IsAccess(remoteNetPath, remoteHostUser, remoteHostUserPasswd):
+
+    strCmd = r"net use %s %s /user:%s" % (remoteNetPath, remoteHostUserPasswd, remoteHostUser)
+
+    try:
+        from subprocess import PIPE, Popen
+        cmdHandle = Popen(strCmd, shell=True, stdout=PIPE, stderr=PIPE)
+        out, err = cmdHandle.communicate()
+        strOutMsg = out.decode("gb2312")
+        strErrMsg = err.decode("gb2312")
+        if strOutMsg:
+            rtnCmdMsg = strOutMsg
+        else:
+            rtnCmdMsg = strErrMsg
+
+        rtnCmdMsgLine = ""
+        for line in rtnCmdMsg:
+            rtnCmdMsgLine += line.strip()
+
+        if "1219" in rtnCmdMsgLine or strOutMsg:
+            # 尝试文件是否可以进行读写操作
+            import uuid
+            wirteFlagFile = "%s\%s" % (remoteNetPath,str(uuid.uuid4()))
+            with open(wirteFlagFile, "w") as testFile:
+                pass
+            os.remove(wirteFlagFile)
+            return True
+        else:
+            return rtnCmdMsgLine
+
+    except Exception as e:
+        return e
+
+import json
+class DateEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, datetime.datetime):
+            return obj.strftime('%Y-%m-%d %H:%M:%S')
+        if isinstance(obj, datetime.timedelta):
+            return str(obj)
+        elif isinstance(obj, datetime.date):
+            return obj.strftime("%Y-%m-%d")
+        else:
+            return json.JSONEncoder.default(self, obj)

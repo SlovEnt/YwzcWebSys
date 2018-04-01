@@ -6,7 +6,7 @@ Config.ini
 temp_test.py
 __pycache__/
 .idea/
-
+TestScript.py
 *.DS_Store
 
 

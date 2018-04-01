@@ -93,9 +93,9 @@ class FileBackTaskExcludeSet(models.Model):
     def __str__(self):
         return self.exclude_list
 
-
 class FileBackTaskLog(models.Model):
     task_name = models.CharField(max_length=128, verbose_name="任务名称")
+    task_status = models.CharField(max_length=1, choices=GetSysDict("TASK_STATUS"), verbose_name="任务状态")
     task_run_date = models.DateField(verbose_name="任务执行日期")
     task_run_time = models.TimeField(verbose_name="任务执行时间")
     host_ip = models.GenericIPAddressField(verbose_name="主机IP")
@@ -111,7 +111,6 @@ class FileBackTaskLog(models.Model):
         verbose_name = u"文件备份日志"
         verbose_name_plural = verbose_name
         ordering = ('task_run_date','task_run_time')
-
 
     def __str__(self):
         return self.task_name

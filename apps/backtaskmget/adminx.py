@@ -60,11 +60,11 @@ xadmin.site.register(FileBackTaskExcludeSet, FileBackTaskExcludeSetAdmin)
 
 
 class FileBackTaskLogAdmin(object):
-    list_display = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz']
-    search_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz','remark']
-    list_filter = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','arch_nas_path','file_siz','remark']
+    list_display = ['task_name','task_status','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_siz']
+    search_fields = ['task_name','task_status','task_run_date','host_ip','md5_string','file_name','arch_nas_path']
+    list_filter = ['task_name','task_status','task_run_date','md5_string','file_name']
     ordering = ['task_run_date', "task_run_time"]
-    readonly_fields = ['task_name','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz']
+    readonly_fields = ['task_name','task_status','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_save_path','arch_nas_path','file_siz']
 
     base_template = 'xadmin/base_site_cust.html'
     model_icon = 'fa fa-file-archive-o'
