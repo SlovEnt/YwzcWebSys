@@ -1,11 +1,10 @@
 import os
 import datetime
+import time
 import json
 from multiprocessing import Pool
-import time
 import traceback
 
-os.environ['DJANGO_SETTINGS_MODULE'] = 'YwzcWebSys.settings'
 os.environ['DJANGO_SETTINGS_MODULE'] = 'YwzcWebSys.settings'
 from apps.commset.GetSysInfo import mySqlConn
 

@@ -2,9 +2,10 @@ import xadmin
 from xadmin import views
 from .models import DBBackTaskSet, DBBackTaskLog, FileBackTaskExcludeSet, FileBackTaskLog, FileBackTaskSet
 
+
 class DBBackTaskSetAdmin(object):
-    list_display = ['task_name','host_ip','host_user','db_type','db_sid','is_compre','compre_type','is_compre_passwd','file_save_path','names_of_backdb','reserved_day','proc_flag','task_run_time']
-    search_fields = ['task_name','host_ip','db_type','is_compre','compre_type','is_compre_passwd','reserved_day','proc_flag']
+    list_display = ['task_name','host_ip','os_type','db_type','db_sid','is_compre','compre_type','is_compre_passwd','names_of_backdb','reserved_day','proc_flag','task_run_time','enforce_flag']
+    search_fields = ['task_name','host_ip','db_type','is_compre','compre_type','is_compre_passwd','proc_flag']
     list_filter = ['task_name','host_ip','db_type','is_compre','compre_type','is_compre_passwd','reserved_day','proc_flag']
     ordering = ["task_name"]
     # readonly_fields = ['ip_addr', 'net_tags', 'sub_mask', 'gateway']

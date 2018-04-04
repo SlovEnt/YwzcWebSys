@@ -53,7 +53,7 @@ class SysDictItemAdmin(object):
 from apps.netmget.models import Net2Manage, Net5Manage, Net9Manage, Net10Manage, Net12Manage, Net16Manage, \
     Net91Manage, Test168NetManage, Test169NetManage, Test170NetManage, Test171NetManage
 from apps.backtaskmget.models import DBBackTaskSet,DBBackTaskLog,FileBackTaskSet,FileBackTaskLog
-from apps.insbusi.models import RunScriptsList, InserNewOrgInfo
+from apps.insbusi.models import RunScriptsList, InserNewOrgInfo, InserNewOrgInfoLog
 
 class GlobalSetting(object):
 
@@ -94,6 +94,7 @@ class GlobalSetting(object):
             {'title': '机构业务', 'icon': 'fa fa-building', 'menus': (
                 {'title': '函数运行状态', 'url': self.get_model_url(RunScriptsList, 'changelist'), 'icon': self.get_model_icon(RunScriptsList)},
                 {'title': '批量加新营业部', 'url': self.get_model_url(InserNewOrgInfo, 'changelist'), 'icon': self.get_model_icon(InserNewOrgInfo)},
+                {'title': '加新营业部日志', 'url': self.get_model_url(InserNewOrgInfoLog, 'changelist'), 'icon': self.get_model_icon(InserNewOrgInfo)},
             )},
         )
 

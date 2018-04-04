@@ -92,7 +92,6 @@ class cxOracle(object):
         elif sql_elems[0] in ['update', 'delete']:
             if 'where' not in sql_elems:
                 rt = False
-
         return rt
 
     # 导出结果为文件
@@ -135,19 +134,15 @@ class cxOracle(object):
     # 字段名
     def QueryDesc(self, sql, nStart=0, nNum=- 1):
         rt = []
-
         # 获取cursor
         cur = self._NewCursor()
         if not cur:
             return rt
-
         # 查询到列表
         cur.execute(sql)
         descList = [i[0] for i in cur.description]
-
         # 释放cursor
         self._DelCursor(cur)
-
         return descList
 
     # 更新
@@ -173,6 +168,45 @@ class cxOracle(object):
 
         return rt
 
+    def QureyDict(self, sql, nStart=0, nNum=- 1):
+
+        rt = []
+        # 获取cursor
+        cur = self._NewCursor()
+        if not cur:
+            return rt
+        # 查询到列表
+        cur.execute(sql)
+
+        descList = [i[0] for i in cur.description]
+
+        if (nStart == 0) and (nNum == 1):
+            dataList = cur.fetchone()
+            singDataDict = {}
+            for x in range(0, len(descList) - 1):
+                singDataDict[descList[x]] = dataList[x]
+                rt.append(singDataDict)
+
+        else:
+
+            rs = cur.fetchall()
+            rsDict = []
+
+            for r in rs:
+                singDataDict = {}
+                for x in range(0, len(descList)):
+                    singDataDict[descList[x]] = r[x]
+                rsDict.append(singDataDict)
+
+            if nNum == - 1:
+                rt.extend(rs[nStart:])
+            else:
+                rt.extend(rs[nStart:nStart + nNum])
+
+        # 释放cursor
+        self._DelCursor(cur)
+
+        return rsDict
 
 class C_PrintLog(object):
     def __init__(self, logFile=""):
@@ -190,7 +224,7 @@ class C_PrintLog(object):
 
     def PrintWarningLog(self, msg=""):
         now = datetime.datetime.now()
-        print("\033[1;31mWarning INFO: " + now.strftime("%Y-%m-%d %H:%M:%S") + ":\033[0m", msg)
+        print("\033[1;32mWarning INFO: " + now.strftime("%Y-%m-%d %H:%M:%S") + ":\033[0m", msg)
         self.logFile.write(now.strftime("%Y-%m-%d %H:%M:%S") + ": " + msg + "\n")
 
     def debug(msg=""):
@@ -428,8 +462,9 @@ def Get_Redis_Param(redisConnStr, mySqlConn, flag):
 
 def Print_Dict_KandV(dict,dictName="x"):
     for key, value in dict.items():
-        print ("{2}['{0}'] = {1}".format(key, value, dictName))
+        print ("""{2}["{0}"] = {1}""".format(key, value, dictName))
     print()
+    time.sleep(0.5)
 
 def Net_RemtePath_IsAccess(remoteNetPath, remoteHostUser, remoteHostUserPasswd):
 

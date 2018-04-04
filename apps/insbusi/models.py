@@ -42,8 +42,9 @@ class InserNewOrgInfo(models.Model):
 
 class InserNewOrgInfoLog(models.Model):
     org_code = models.ForeignKey(InserNewOrgInfo, on_delete=models.CASCADE, verbose_name="营业部编码")
-    oper_sys = models.CharField(max_length=32, verbose_name="处理系统名称")
+    oper_sys = models.CharField(max_length=128, verbose_name="处理系统名称")
     insert_datetime = models.DateTimeField(default=datetime.now, verbose_name="执行时间")
+    task_status = models.CharField(max_length=1, choices=GetSysDict("TASK_STATUS"),verbose_name="任务处理结果", default="0")
     log_txt = models.TextField(blank=True, verbose_name="日志记录")
 
     class Meta:

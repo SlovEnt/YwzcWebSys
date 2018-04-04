@@ -7,6 +7,7 @@ temp_test.py
 __pycache__/
 .idea/
 TestScript.py
+ch_test_*.py
 *.DS_Store
 
 
@@ -53,4 +54,5 @@ local.properties
 
 
 # Log Files
+*/log/
 *.log
