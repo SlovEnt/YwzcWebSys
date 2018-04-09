@@ -56,10 +56,12 @@ INSTALLED_APPS = [
     'apps.backtaskmget',                    # 备份任务管理
     'apps.insbusi',                          # 机构业务
     'apps.runscripts',                       # 后台函数执行管理
+    'device',                                 # 设备信息登记
 
     # 注册xadmin
     'xadmin',
     'crispy_forms',
+    'DjangoUeditor',
 
 ]
 

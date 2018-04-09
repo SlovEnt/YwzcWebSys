@@ -130,7 +130,7 @@ if __name__ == "__main__" :
                    AND ORG_CODE = '%s'
             ''' % init["org_code"]
 
-            tyzhDatas = oraConnTyzh.QureyDict(strSql)
+            tyzhDatas = oraConnTyzh.QueryDict(strSql)
 
             if len(tyzhDatas) != 1:
                 MSG_INFO["MSG_NO"] = 112200

@@ -27,10 +27,11 @@ xadmin.site.register(InserNewOrgInfo, InserNewOrgInfoAdmin)
 
 
 class InserNewOrgInfoLogAdmin(object):
-    list_display = ['oper_sys', 'insert_datetime', 'task_status', 'log_txt']
+    list_display = ['oper_sys', 'insert_datetime', 'colored_task_status']
     readonly_fields = ['oper_sys', 'insert_datetime', 'task_status', 'log_txt']
     # hidden_menu = True # 隐藏模块 不在菜单中显示
 xadmin.site.register(InserNewOrgInfoLog, InserNewOrgInfoLogAdmin)
+
 
 class RunScriptsListAdmin(object):
     exclude = ['run_status','run_point']

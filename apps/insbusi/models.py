@@ -39,13 +39,33 @@ class InserNewOrgInfo(models.Model):
         return "营业部编码为：%s 的记录" % self.org_code
 
 
-
+from django.utils.html import format_html
 class InserNewOrgInfoLog(models.Model):
     org_code = models.ForeignKey(InserNewOrgInfo, on_delete=models.CASCADE, verbose_name="营业部编码")
     oper_sys = models.CharField(max_length=128, verbose_name="处理系统名称")
     insert_datetime = models.DateTimeField(default=datetime.now, verbose_name="执行时间")
     task_status = models.CharField(max_length=1, choices=GetSysDict("TASK_STATUS"),verbose_name="任务处理结果", default="0")
     log_txt = models.TextField(blank=True, verbose_name="日志记录")
+
+    def colored_task_status(self):
+        if self.task_status == "3":
+            color_code = "red"
+            task_status = "失败"
+        elif self.task_status == "2":
+            color_code = "green"
+            task_status = "忽略"
+        elif self.task_status == "1":
+            color_code = "blue"
+            task_status = "完成"
+        else:
+            color_code = "green"
+            task_status = "处理中'"
+        return format_html(
+            '<span style="color: {};">{}</span>',
+            color_code,
+            task_status,
+        )
+    colored_task_status.short_description = "任务处理结果"
 
     class Meta:
         verbose_name = u"营业部添加日志"

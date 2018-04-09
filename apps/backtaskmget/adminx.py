@@ -29,6 +29,9 @@ class DBBackTaskLogAdmin(object):
 
     base_template = 'xadmin/base_site_cust.html'
 
+    # 分页显示的记录
+    list_per_page = 200
+
     # def queryset(self):
     #     qs = super(DBBackTaskSetAdmin, self).queryset()
     #     qs = qs.filter(net_tags="10.0.2.0")
@@ -40,6 +43,7 @@ xadmin.site.register(DBBackTaskLog, DBBackTaskLogAdmin)
 class FileBackTaskSetInline(object):
     model = FileBackTaskExcludeSet
     extra = 0
+
 
 class FileBackTaskSetAdmin(object):
     list_display = ['task_name','host_ip','file_save_path','arch_nas_path','reserved_day','proc_flag','task_run_time']
@@ -61,7 +65,7 @@ xadmin.site.register(FileBackTaskExcludeSet, FileBackTaskExcludeSetAdmin)
 
 
 class FileBackTaskLogAdmin(object):
-    list_display = ['task_name','task_status','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_siz']
+    list_display = ['task_name','colored_task_status','task_run_date','task_run_time','host_ip','file_modify_dt','md5_string','file_name','file_siz']
     search_fields = ['task_name','task_status','task_run_date','host_ip','md5_string','file_name','arch_nas_path']
     list_filter = ['task_name','task_status','task_run_date','md5_string','file_name']
     ordering = ['task_run_date', "task_run_time"]
@@ -69,6 +73,9 @@ class FileBackTaskLogAdmin(object):
 
     base_template = 'xadmin/base_site_cust.html'
     model_icon = 'fa fa-file-archive-o'
+
+    # 分页显示的记录
+    list_per_page = 200
 
 xadmin.site.register(FileBackTaskLog, FileBackTaskLogAdmin)
 

@@ -5575,6 +5575,8 @@ a.thumbnail.active {
 }
 
 a.list-group-item {
+  /* By SlovEnt */
+  padding-left: 25px;
   color: #555555;
 }
 

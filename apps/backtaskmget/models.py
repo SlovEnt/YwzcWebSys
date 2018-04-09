@@ -96,6 +96,8 @@ class FileBackTaskExcludeSet(models.Model):
     def __str__(self):
         return self.exclude_list
 
+
+from django.utils.html import format_html
 class FileBackTaskLog(models.Model):
     task_name = models.CharField(max_length=128, verbose_name="任务名称")
     task_status = models.CharField(max_length=1, choices=GetSysDict("TASK_STATUS"), verbose_name="任务状态")
@@ -109,6 +111,27 @@ class FileBackTaskLog(models.Model):
     arch_nas_path = models.CharField(max_length=256, verbose_name="归档路径")
     file_siz = models.IntegerField(verbose_name="文件大小（kb）")
     remark = models.TextField(verbose_name="备注信息")
+
+    def colored_task_status(self):
+        if self.task_status == "3":
+            color_code = "red"
+            task_status = "失败"
+        elif self.task_status == "2":
+            color_code = "green"
+            task_status = "忽略"
+        elif self.task_status == "1":
+            color_code = "blue"
+            task_status = "完成"
+        else:
+            color_code = "green"
+            task_status = "处理中'"
+        return format_html(
+            '<span style="color: {};">{}</span>',
+            color_code,
+            task_status,
+        )
+    colored_task_status.short_description = "任务处理结果"
+
 
     class Meta:
         verbose_name = u"文件备份日志"

@@ -168,7 +168,7 @@ class cxOracle(object):
 
         return rt
 
-    def QureyDict(self, sql, nStart=0, nNum=- 1):
+    def QueryDict(self, sql, nStart=0, nNum=- 1):
 
         rt = []
         # 获取cursor
@@ -510,3 +510,19 @@ class DateEncoder(json.JSONEncoder):
             return obj.strftime("%Y-%m-%d")
         else:
             return json.JSONEncoder.default(self, obj)
+
+
+def Get_MySql_Trading_Day(mySqlConn, dayYMD):
+    strSql = "select date_flag from YwzcWebSys.commset_calendar a where a.physical_date='{0}'".format(dayYMD)
+    rtnFlag = mySqlConn.query(strSql)
+    if len(rtnFlag) != 1:
+        raise ZeroDivisionError("当前系统中未导入相关交易日或重复导入 {0} !".format(dayYMD))
+    else:
+        if str(rtnFlag[0]["date_flag"]) == "0":
+            return True
+        else:
+            return False
+
+
+
+

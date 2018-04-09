@@ -63,7 +63,7 @@ class SysDictItem(models.Model):
 class SysParam(models.Model):
     param_en_name = models.CharField(max_length=32, verbose_name="参数简码")
     param_name = models.CharField(max_length=128, verbose_name="参数名称")
-    param_value = models.CharField(max_length=128, verbose_name=u"参数值")
+    param_value = models.TextField(verbose_name=u"参数值")
     param_type = models.CharField(max_length=8, choices=GetSysDict("OPER_TYPE"), verbose_name=u"参数操作标识", default="3")
     param_cls = models.CharField(max_length=2, choices=GetSysDict("MODEL_CLS"), verbose_name="参数分类", default="1")
     param_status = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), null=True, verbose_name="处理标识", default="Y")
@@ -76,3 +76,40 @@ class SysParam(models.Model):
     # 重载__str__方法，打印实例会打印username，username为继承自AbstractUser
     def __str__(self):
         return self.param_name
+
+
+class Calendar(models.Model):
+    ''' 交易日历表 '''
+    bookset = models.CharField(max_length=1, verbose_name="关联模块名称")
+    physical_date = models.CharField(max_length=8, verbose_name=" 物理日期")
+    date_flag = models.CharField(max_length=1, choices=GetSysDict("DATE_FLAG"), verbose_name="日期标志") # DD[209]：'0' -- 非清算日，'1' -- 清算日"
+    date_status = models.CharField(max_length=1, verbose_name="日期状态") #DD[210]：'0' -- 关账，'1' -- 开账
+
+    class Meta:
+        verbose_name = "交易日历"
+        verbose_name_plural = verbose_name
+        ordering = ('physical_date',)
+        unique_together = ('bookset', 'physical_date',)
+        index_together = ('physical_date', 'date_flag',)
+
+    def __str__(self):
+        return self.physical_date
+
+
+class MenuList(models.Model):
+    '''{'title': '函数运行状态', 'url': self.get_model_url(RunScriptsList, 'changelist'), 'icon': self.get_model_icon(RunScriptsList)},'''
+    titleA = models.CharField(max_length=64, choices=GetSysDict("MODEL_CLS"), verbose_name="一级菜单名称")
+    title = models.CharField(max_length=64, verbose_name="二级菜单名称")
+    url = models.CharField(max_length=128, verbose_name="链接目标")
+    icon = models.CharField(max_length=128, verbose_name="图标链接")
+    sort_rule = models.IntegerField(verbose_name="排序规则")
+    flag = models.CharField(max_length=1, choices=GetSysDict("PROC_FLAG"), null=True, verbose_name="处理标识", default="Y")
+
+    class Meta:
+        verbose_name = "菜单设置"
+        verbose_name_plural = verbose_name
+        ordering = ('sort_rule',)
+        unique_together = ('url',)
+
+    def __str__(self):
+        return self.title

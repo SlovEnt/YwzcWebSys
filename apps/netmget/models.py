@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+from DjangoUeditor.models import UEditorField
 
 class IpManage(models.Model):
     ip_addr = models.GenericIPAddressField(max_length=32, verbose_name="IP地址")
@@ -9,7 +10,7 @@ class IpManage(models.Model):
     sub_mask = models.GenericIPAddressField(max_length=32, verbose_name="子网掩码")
     gateway = models.GenericIPAddressField(max_length=32, verbose_name="网关地址")
     use_object = models.CharField(max_length=255, blank=True, verbose_name="使用对象")
-    remark = models.TextField(blank=True,verbose_name="备注信息")
+    remark = UEditorField(blank=True,verbose_name="备注信息", width=800, height=400, imagePath="netmget/ueditor/", filePath="netmget/ueditor/", default='')
 
     class Meta:
         verbose_name = u"IP地址管理"

@@ -31,10 +31,13 @@ class UeditorPlugin(BaseAdminPlugin):
 
     # 在我们生成的页面中放入自己的js文件
     def block_extrahead(self, context, nodes):
-        js = '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.config.js")         #自己的静态目录
-        js += '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.all.min.js")   #自己的静态目录
+        js = '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.config.js")     # 自己的静态目录
+        js += '<script type="text/javascript" src="%s"></script>' % (settings.STATIC_URL + "ueditor/ueditor.all.min.js")   # 自己的静态目录
         nodes.append(js)
+
 ## 新增页面
 xadmin.site.register_plugin(UeditorPlugin, UpdateAdminView)
 ## 修改页面
 xadmin.site.register_plugin(UeditorPlugin, CreateAdminView)
+# ## 修改页面
+# xadmin.site.register_plugin(UeditorPlugin, ModelFormAdminView)

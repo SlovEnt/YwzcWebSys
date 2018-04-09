@@ -1250,7 +1250,7 @@ class WZH_Add_Org(object):
 
         # 使用18营业部为模板 取配置替换插入
         strSql = "SELECT * FROM {0} WHERE PROP_VALUE = '18'".format(tableName)
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas :
 
@@ -1313,7 +1313,7 @@ class WZH_Add_Org(object):
 
         # 使用18营业部为模板 取配置替换插入
         strSql = "SELECT * FROM {0} WHERE RIGHT_DEP_CODE = '18'".format(tableName)
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas:
 
@@ -1501,7 +1501,7 @@ class ESIM_Add_Org(object):
                                 WHERE DEP_ID = '%s'
                                   AND ROLE_NAME = '%s')
         ''' % (tempDepCode, roleName)
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas:
             fieldValue['APP_ID'] = data["APP_ID"]
@@ -1724,7 +1724,7 @@ class ESIM_Add_Org(object):
 
         SETTLE_DEPT_CODE = "GYZQ000130"  # 以130营业部的权限为模板 该营业部较新 科目参考性更强
         strSql = '''SELECT DEPT_ACC_ID,ACC_BOOK_ID,ACCT_CODE,SETTLE_DEPT_CODE,INIT_DATE FROM EA_DEPACCT.DEPT_ACC WHERE SETTLE_DEPT_CODE='%s' ''' % SETTLE_DEPT_CODE
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas:
             strSql = '''SELECT DEPT_ACC_ID FROM EA_DEPACCT.DEPT_ACC WHERE SETTLE_DEPT_CODE='%s' AND ACC_BOOK_ID='%s' AND ACCT_CODE='%s' ''' % (
@@ -1851,7 +1851,7 @@ class ESIM_Add_Org(object):
               FROM UI_FI.K3_ACCT_COMP
              WHERE SETTLE_DEPT_CODE = 'GYZQ000018'
         '''
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas:
 
@@ -1927,7 +1927,7 @@ class ESIM_Add_Org(object):
                AND SUBSTR(A.OPP_ACCT_ID, 1, 8) = '2113.15.'
         ''' % (self.info["xy_org"] , self.info["xy_org"] )
 
-        rtnDatas = self.oraConn.QureyDict(strSql)
+        rtnDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnDatas:
 
@@ -2008,7 +2008,7 @@ class ESIM_Add_Org(object):
              WHERE B.SETTLE_DEPT_CODE = 'GYZQ000018'
                AND (B.ACCT_CODE LIKE '2113%%')
         ''' % (orgCode3, self.info["org_name"], self.info["xy_org"] )
-        rtnSubDatas = self.oraConn.QureyDict(strSql)
+        rtnSubDatas = self.oraConn.QueryDict(strSql)
 
         for data in rtnSubDatas:
 

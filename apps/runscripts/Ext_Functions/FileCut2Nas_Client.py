@@ -137,15 +137,3 @@ if __name__ == "__main__" :
 
         traceback.print_exc()
 
-
-
-
-
-
-                # CopyFile2NasMain(copyParams,rtnMsg["msg"])
-
-                # chfc = CopyHostFileClass(copyParams, RedisR)
-
-
-
-

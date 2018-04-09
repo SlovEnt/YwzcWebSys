@@ -29,8 +29,21 @@ urlpatterns = [
     path('xadmin/', xadmin.site.urls),
 
     path('xadmin/insbusi/runscriptslist/', include('runscripts.urls')),
+    path('ueditor/', include('DjangoUeditor.urls')),
 
 
     # path('script/TestRun/', GetTestRun.as_vies(), name= "gettestrun")
 
 ]
+
+
+# 计划任务设置区域，无需启动，直接写入要调用的函数即可
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+# 定时导入计划任务
+from commset import ScheduleTask
+
+# 定时启动文件切换脚本
+
+
+

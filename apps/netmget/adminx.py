@@ -16,6 +16,12 @@ class IpAllSet(object):
     # add_form_template = 'base_site_cust.html'
     # change_form_template = 'base_site_cust.html'
 
+    # 使用ueditor
+    style_fields = {"remark": "ueditor"}
+
+    # 分页显示的记录
+    list_per_page = 100
+
 
 class IpManageAdmin(object):
     list_display = ['ip_addr', 'net_tags', 'sub_mask', 'gateway', 'use_object', 'remark']

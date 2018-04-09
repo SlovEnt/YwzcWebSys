@@ -164,7 +164,7 @@ if __name__ == "__main__" :
             tyzhAo.Insert_STK_ACCTBIZ_CFG_NEW(tableName)
 
             tableName = "KBSSUSER.STK_ACCTBIZ_ORG_NEW"
-            print(tyzhAo.Rtn_Table_Desc(tableName))
+            # print(tyzhAo.Rtn_Table_Desc(tableName))
             tyzhAo.Insert_STK_ACCTBIZ_ORG_NEW(tableName)
 
             # (7)新意机构代码对照设置(后台表XY_ORG设置);
